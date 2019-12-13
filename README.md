@@ -14,5 +14,7 @@ Discussion
 I used the following technologies: Ruby, Sinatra
 This is a browser implementation of my mastermind game (https://github.com/IngaMM/rb_mastermind).
 
+A live version of this app can be found at https://hidden-fortress-41272.herokuapp.com/
+
 Requirements
 Sinatra, Browser
