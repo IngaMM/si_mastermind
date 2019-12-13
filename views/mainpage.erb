@@ -1,0 +1,85 @@
+<div id="header">
+  <h1> Inga's mastermind game! </h1>
+  <h2> Guess the secret code. Repetitions are possible.</h2>
+</div>
+
+<form  action="/" method="post">
+  <div class="form">
+    <% (0..3).each do |i| %>
+        <p class = "position_nr"> Pos<%=i+1%> </p>
+        <%["yellow", "orange", "red", "magenta", "blue", "green"].each do |c| %>
+        <%if @@counter >= 1
+            c==@@guess[@@counter-1][i] ? status = "checked" : status = ""
+          else
+            c=="yellow" ? status = "checked" : status = ""
+          end%>
+          <input type="radio" name="pos<%=i+1%>" value=<%=c%> <%=status%>>
+          <div class="square" style=<%="background-color:" << c << ";"%>></div>
+        <%end%>
+        <br>
+    <%end%>
+    <br>
+    <% if @@counter == 12 || @@win == true
+        submit_visibility = "hidden"
+      else
+      submit_visibility = "visible"
+    end%>
+    <input type="submit" value="Guess" class="button"
+           style=<%="visibility:" << submit_visibility << ";"%>>
+  </div>
+</form>
+<br>
+<form action="/restart" method="post">
+  <div class="form">
+    <input type="submit" value="Restart" class="button">
+  </div>
+</form>
+
+<br>
+<% if @message %>
+  <p id=message> <%=@message%> </p>
+<%end%>
+<br>
+
+<table id="board">
+  <tr>
+    <th></th>
+    <th colspan="4"> Guesses </th>
+    <th></th>
+    <th colspan="4"> Feedback </th>
+  </tr>
+  <tr>
+    <td></td>
+    <% (0..3).each do |i| %>
+      <td>Pos<%=i+1%></td>
+    <%end%>
+    <td>&nbsp&nbsp</td>
+    <% (0..3).each do |i| %>
+      <td>Pos<%=i+1%></td>
+    <%end%>
+   </tr>
+   <% (0..11).each do |j| %>
+   <tr>
+     <td>Round <%=j+1%></td>
+     <% (0..3).each do |i| %>
+       <td><div class="square" style=<%="background-color:" << @@guess[j][i] << ";"%>></div></td>
+     <%end%>
+     <td></td>
+     <% (0..3).each do |i| %>
+       <td><div class="square" style=<%="background-color:" << @@feedback_bc[j][i] << ";" <<
+         "border-style:" << @@feedback_bs[j][i] << ";"%>></div></td>
+     <%end%>
+   </tr>
+   <%end%>
+</table>
+
+<br>
+<br>
+
+<div id="legend">
+  <b>Legend</b>
+  <br>
+  <div class="square" style="border-style: solid"></div> Color correct, but position wrong
+  <br>
+  <div class="square" style="background-color:black"></div> Color and position correct
+</div>
